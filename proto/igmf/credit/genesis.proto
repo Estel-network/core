@@ -1,0 +1,12 @@
+syntax = "proto3";
+package igmf.credit;
+
+import "gogoproto/gogo.proto";
+import "igmf/credit/params.proto";
+
+option go_package = "igmf/x/credit/types";
+
+// GenesisState defines the credit module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+}

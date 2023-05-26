@@ -1,0 +1,7 @@
+syntax = "proto3";
+package igmf.credit;
+
+option go_package = "igmf/x/credit/types";
+
+// Msg defines the Msg service.
+service Msg {}

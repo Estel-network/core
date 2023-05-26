@@ -1,0 +1,7 @@
+syntax = "proto3";
+package igmf.oracle;
+
+option go_package = "igmf/x/oracle/types";
+
+// Msg defines the Msg service.
+service Msg {}
