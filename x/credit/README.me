@@ -2,12 +2,18 @@
 
 This module custody users assets and accordingly lend credits
 
+- credit
+-- index -> uid
+-- owner -> acc address of the owner
+-- denom -> denom procided
+-- denomAmount -> literally
+-- credited -> amount of credits
+-- rewarding -> the amount of credit that counts for rewards
+-- lastRewardedBlock -> last reward distribution
+-- bond -> reserved
+
 TODO:
 
-- Create a struct to control the users collateral
---index
---owner
---denom
---amount
---credits
--- ...
+moduleVariables:
+- amountCredited
+...
