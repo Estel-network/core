@@ -1,9 +1,10 @@
 package credit
 
 import (
-	sdk "github.com/cosmos/cosmos-sdk/types"
 	"igmf/x/credit/keeper"
 	"igmf/x/credit/types"
+
+	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
 // InitGenesis initializes the module's state from a provided genesis state.
@@ -13,9 +14,8 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 		k.SetCredit(ctx, elem)
 	}
 	// Set if defined
-	if genState.ModuleInfo != nil {
-		k.SetModuleInfo(ctx, *genState.ModuleInfo)
-	}
+	k.SetModuleInfo(ctx, genState.ModuleInfo)
+
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -29,7 +29,7 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	// Get all moduleInfo
 	moduleInfo, found := k.GetModuleInfo(ctx)
 	if found {
-		genesis.ModuleInfo = &moduleInfo
+		genesis.ModuleInfo = moduleInfo
 	}
 	// this line is used by starport scaffolding # genesis/module/export
 

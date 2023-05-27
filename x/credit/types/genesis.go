@@ -11,7 +11,10 @@ const DefaultIndex uint64 = 1
 func DefaultGenesis() *GenesisState {
 	return &GenesisState{
 		CreditList: []Credit{},
-		ModuleInfo: nil,
+		ModuleInfo: ModuleInfo{
+			TotalPositions: 0,
+			TotalCredited:  0,
+		},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}

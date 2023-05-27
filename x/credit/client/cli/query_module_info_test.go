@@ -21,13 +21,13 @@ func networkWithModuleInfoObjects(t *testing.T) (*network.Network, types.ModuleI
 	state := types.GenesisState{}
 	require.NoError(t, cfg.Codec.UnmarshalJSON(cfg.GenesisState[types.ModuleName], &state))
 
-	moduleInfo := &types.ModuleInfo{}
+	moduleInfo := types.ModuleInfo{}
 	nullify.Fill(&moduleInfo)
 	state.ModuleInfo = moduleInfo
 	buf, err := cfg.Codec.MarshalJSON(&state)
 	require.NoError(t, err)
 	cfg.GenesisState[types.ModuleName] = buf
-	return network.New(t, cfg), *state.ModuleInfo
+	return network.New(t, cfg), state.ModuleInfo
 }
 
 func TestShowModuleInfo(t *testing.T) {

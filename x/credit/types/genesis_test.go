@@ -3,8 +3,9 @@ package types_test
 import (
 	"testing"
 
-	"github.com/stretchr/testify/require"
 	"igmf/x/credit/types"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestGenesisState_Validate(t *testing.T) {
@@ -30,7 +31,7 @@ func TestGenesisState_Validate(t *testing.T) {
 						Index: "1",
 					},
 				},
-				ModuleInfo: &types.ModuleInfo{
+				ModuleInfo: types.ModuleInfo{
 					TotalPositions: 90,
 					TotalCredited:  36,
 				},

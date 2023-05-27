@@ -13,6 +13,6 @@ option go_package = "igmf/x/credit/types";
 message GenesisState {
            Params     params     = 1 [(gogoproto.nullable) = false];
   repeated Credit     creditList = 2 [(gogoproto.nullable) = false];
-           ModuleInfo moduleInfo = 3;
+           ModuleInfo moduleInfo = 3 [(gogoproto.nullable) = false];
 }
 

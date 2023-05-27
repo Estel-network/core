@@ -3,11 +3,12 @@ package credit_test
 import (
 	"testing"
 
-	"github.com/stretchr/testify/require"
 	keepertest "igmf/testutil/keeper"
 	"igmf/testutil/nullify"
 	"igmf/x/credit"
 	"igmf/x/credit/types"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestGenesis(t *testing.T) {
@@ -22,7 +23,7 @@ func TestGenesis(t *testing.T) {
 				Index: "1",
 			},
 		},
-		ModuleInfo: &types.ModuleInfo{
+		ModuleInfo: types.ModuleInfo{
 			TotalPositions: 37,
 			TotalCredited:  94,
 		},
