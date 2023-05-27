@@ -44063,6 +44063,45 @@ paths:
           type: string
       tags:
         - Query
+  /igmf/credit/module_info:
+    get:
+      summary: Queries a ModuleInfo by index.
+      operationId: IgmfCreditModuleInfo
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              ModuleInfo:
+                type: object
+                properties:
+                  totalPositions:
+                    type: string
+                    format: uint64
+                  totalCredited:
+                    type: string
+                    format: uint64
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
   /igmf/credit/params:
     get:
       summary: Parameters queries the parameters of the module.
@@ -71729,6 +71768,15 @@ definitions:
       bond:
         type: string
         format: uint64
+  igmf.credit.ModuleInfo:
+    type: object
+    properties:
+      totalPositions:
+        type: string
+        format: uint64
+      totalCredited:
+        type: string
+        format: uint64
   igmf.credit.Params:
     type: object
     description: Params defines the parameters for the module.
@@ -71812,6 +71860,18 @@ definitions:
             type: string
             format: uint64
           bond:
+            type: string
+            format: uint64
+  igmf.credit.QueryGetModuleInfoResponse:
+    type: object
+    properties:
+      ModuleInfo:
+        type: object
+        properties:
+          totalPositions:
+            type: string
+            format: uint64
+          totalCredited:
             type: string
             format: uint64
   igmf.credit.QueryParamsResponse:

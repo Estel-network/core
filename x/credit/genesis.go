@@ -12,6 +12,10 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 	for _, elem := range genState.CreditList {
 		k.SetCredit(ctx, elem)
 	}
+	// Set if defined
+	if genState.ModuleInfo != nil {
+		k.SetModuleInfo(ctx, *genState.ModuleInfo)
+	}
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -22,6 +26,11 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 	genesis.Params = k.GetParams(ctx)
 
 	genesis.CreditList = k.GetAllCredit(ctx)
+	// Get all moduleInfo
+	moduleInfo, found := k.GetModuleInfo(ctx)
+	if found {
+		genesis.ModuleInfo = &moduleInfo
+	}
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

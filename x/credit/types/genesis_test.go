@@ -30,6 +30,10 @@ func TestGenesisState_Validate(t *testing.T) {
 						Index: "1",
 					},
 				},
+				ModuleInfo: &types.ModuleInfo{
+					TotalPositions: 90,
+					TotalCredited:  36,
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,

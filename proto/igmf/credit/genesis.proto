@@ -5,12 +5,14 @@ package igmf.credit;
 import "gogoproto/gogo.proto";
 import "igmf/credit/params.proto";
 import "igmf/credit/credit.proto";
+import "igmf/credit/module_info.proto";
 
 option go_package = "igmf/x/credit/types";
 
 // GenesisState defines the credit module's genesis state.
 message GenesisState {
-           Params params     = 1 [(gogoproto.nullable) = false];
-  repeated Credit creditList = 2 [(gogoproto.nullable) = false];
+           Params     params     = 1 [(gogoproto.nullable) = false];
+  repeated Credit     creditList = 2 [(gogoproto.nullable) = false];
+           ModuleInfo moduleInfo = 3;
 }
 

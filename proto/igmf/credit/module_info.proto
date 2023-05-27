@@ -1,0 +1,10 @@
+syntax = "proto3";
+package igmf.credit;
+
+option go_package = "igmf/x/credit/types";
+
+message ModuleInfo {
+  uint64 totalPositions = 1; 
+  uint64 totalCredited = 2; 
+  
+}

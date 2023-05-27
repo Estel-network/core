@@ -7,6 +7,7 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "igmf/credit/params.proto";
 import "igmf/credit/credit.proto";
+import "igmf/credit/module_info.proto";
 
 option go_package = "igmf/x/credit/types";
 
@@ -26,6 +27,12 @@ service Query {
   }
   rpc CreditAll (QueryAllCreditRequest) returns (QueryAllCreditResponse) {
     option (google.api.http).get = "/igmf/credit/credit";
+  
+  }
+  
+  // Queries a ModuleInfo by index.
+  rpc ModuleInfo (QueryGetModuleInfoRequest) returns (QueryGetModuleInfoResponse) {
+    option (google.api.http).get = "/igmf/credit/module_info";
   
   }
 }
@@ -54,5 +61,11 @@ message QueryAllCreditRequest {
 message QueryAllCreditResponse {
   repeated Credit                                 credit     = 1 [(gogoproto.nullable) = false];
            cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetModuleInfoRequest {}
+
+message QueryGetModuleInfoResponse {
+  ModuleInfo ModuleInfo = 1 [(gogoproto.nullable) = false];
 }
 

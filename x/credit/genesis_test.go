@@ -22,6 +22,10 @@ func TestGenesis(t *testing.T) {
 				Index: "1",
 			},
 		},
+		ModuleInfo: &types.ModuleInfo{
+			TotalPositions: 37,
+			TotalCredited:  94,
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -34,5 +38,6 @@ func TestGenesis(t *testing.T) {
 	nullify.Fill(got)
 
 	require.ElementsMatch(t, genesisState.CreditList, got.CreditList)
+	require.Equal(t, genesisState.ModuleInfo, got.ModuleInfo)
 	// this line is used by starport scaffolding # genesis/test/assert
 }
