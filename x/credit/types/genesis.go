@@ -13,6 +13,7 @@ func DefaultGenesis() *GenesisState {
 		ModuleInfo: ModuleInfo{
 			TotalPositions: uint64(0),
 			TotalCredited:  uint64(0),
+			CreditFee:      uint64(0),
 		},
 		CreditList: []Credit{},
 		// this line is used by starport scaffolding # genesis/types/default

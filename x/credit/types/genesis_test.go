@@ -26,6 +26,7 @@ func TestGenesisState_Validate(t *testing.T) {
 				ModuleInfo: types.ModuleInfo{
 					TotalPositions: 94,
 					TotalCredited:  72,
+					CreditFee:      89,
 				},
 				CreditList: []types.Credit{
 					{

@@ -44082,6 +44082,9 @@ paths:
                   totalCredited:
                     type: string
                     format: uint64
+                  creditFee:
+                    type: string
+                    format: uint64
         default:
           description: An unexpected error response.
           schema:
@@ -71777,6 +71780,9 @@ definitions:
       totalCredited:
         type: string
         format: uint64
+      creditFee:
+        type: string
+        format: uint64
   igmf.credit.Params:
     type: object
     description: Params defines the parameters for the module.
@@ -71872,6 +71878,9 @@ definitions:
             type: string
             format: uint64
           totalCredited:
+            type: string
+            format: uint64
+          creditFee:
             type: string
             format: uint64
   igmf.credit.QueryParamsResponse:
