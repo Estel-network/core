@@ -1,4 +1,5 @@
 syntax = "proto3";
+
 package igmf.oracle;
 
 import "gogoproto/gogo.proto";
@@ -8,5 +9,7 @@ option go_package = "igmf/x/oracle/types";
 
 // GenesisState defines the oracle module's genesis state.
 message GenesisState {
-  Params params = 1 [(gogoproto.nullable) = false];
+  Params params  = 1 [(gogoproto.nullable) = false];
+  string port_id = 2;
 }
+

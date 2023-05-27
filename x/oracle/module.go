@@ -16,6 +16,7 @@ import (
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
+	porttypes "github.com/cosmos/ibc-go/v6/modules/core/05-port/types"
 	"igmf/x/oracle/client/cli"
 	"igmf/x/oracle/keeper"
 	"igmf/x/oracle/types"
@@ -24,6 +25,7 @@ import (
 var (
 	_ module.AppModule      = AppModule{}
 	_ module.AppModuleBasic = AppModuleBasic{}
+	_ porttypes.IBCModule   = IBCModule{}
 )
 
 // ----------------------------------------------------------------------------

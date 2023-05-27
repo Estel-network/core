@@ -23,6 +23,10 @@ func TestGenesisState_Validate(t *testing.T) {
 			desc: "valid genesis state",
 			genState: &types.GenesisState{
 
+				ModuleInfo: types.ModuleInfo{
+					TotalPositions: 94,
+					TotalCredited:  72,
+				},
 				CreditList: []types.Credit{
 					{
 						Index: "0",
@@ -30,10 +34,6 @@ func TestGenesisState_Validate(t *testing.T) {
 					{
 						Index: "1",
 					},
-				},
-				ModuleInfo: types.ModuleInfo{
-					TotalPositions: 90,
-					TotalCredited:  36,
 				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},

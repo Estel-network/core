@@ -170,9 +170,9 @@ var (
 		transfer.AppModuleBasic{},
 		ica.AppModuleBasic{},
 		vesting.AppModuleBasic{},
-		oraclemodule.AppModuleBasic{},
-		reservemodule.AppModuleBasic{},
 		creditmodule.AppModuleBasic{},
+		reservemodule.AppModuleBasic{},
+		oraclemodule.AppModuleBasic{},
 		// this line is used by starport scaffolding # stargate/app/moduleBasic
 	)
 
@@ -186,6 +186,9 @@ var (
 		stakingtypes.NotBondedPoolName: {authtypes.Burner, authtypes.Staking},
 		govtypes.ModuleName:            {authtypes.Burner},
 		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
+		creditmoduletypes.ModuleName:   {authtypes.Minter, authtypes.Burner, authtypes.Staking},
+		reservemoduletypes.ModuleName:  {authtypes.Minter, authtypes.Burner, authtypes.Staking},
+		oraclemoduletypes.ModuleName:   {authtypes.Minter, authtypes.Burner, authtypes.Staking},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 )
@@ -246,11 +249,11 @@ type App struct {
 	ScopedTransferKeeper capabilitykeeper.ScopedKeeper
 	ScopedICAHostKeeper  capabilitykeeper.ScopedKeeper
 
-	OracleKeeper oraclemodulekeeper.Keeper
-
-	ReserveKeeper reservemodulekeeper.Keeper
-
 	CreditKeeper creditmodulekeeper.Keeper
+
+	ReserveKeeper      reservemodulekeeper.Keeper
+	ScopedOracleKeeper capabilitykeeper.ScopedKeeper
+	OracleKeeper       oraclemodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// mm is the module manager
@@ -295,9 +298,9 @@ func New(
 		paramstypes.StoreKey, ibchost.StoreKey, upgradetypes.StoreKey, feegrant.StoreKey, evidencetypes.StoreKey,
 		ibctransfertypes.StoreKey, icahosttypes.StoreKey, capabilitytypes.StoreKey, group.StoreKey,
 		icacontrollertypes.StoreKey,
-		oraclemoduletypes.StoreKey,
-		reservemoduletypes.StoreKey,
 		creditmoduletypes.StoreKey,
+		reservemoduletypes.StoreKey,
+		oraclemoduletypes.StoreKey,
 		// this line is used by starport scaffolding # stargate/app/storeKey
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
@@ -509,30 +512,44 @@ func New(
 		govConfig,
 	)
 
-	app.OracleKeeper = *oraclemodulekeeper.NewKeeper(
+	app.CreditKeeper = *creditmodulekeeper.NewKeeper(
 		appCodec,
-		keys[oraclemoduletypes.StoreKey],
-		keys[oraclemoduletypes.MemStoreKey],
-		app.GetSubspace(oraclemoduletypes.ModuleName),
+		keys[creditmoduletypes.StoreKey],
+		keys[creditmoduletypes.MemStoreKey],
+		app.GetSubspace(creditmoduletypes.ModuleName),
+
+		app.BankKeeper,
+		app.AccountKeeper,
 	)
-	oracleModule := oraclemodule.NewAppModule(appCodec, app.OracleKeeper, app.AccountKeeper, app.BankKeeper)
+	creditModule := creditmodule.NewAppModule(appCodec, app.CreditKeeper, app.AccountKeeper, app.BankKeeper)
 
 	app.ReserveKeeper = *reservemodulekeeper.NewKeeper(
 		appCodec,
 		keys[reservemoduletypes.StoreKey],
 		keys[reservemoduletypes.MemStoreKey],
 		app.GetSubspace(reservemoduletypes.ModuleName),
+
+		app.BankKeeper,
+		app.AccountKeeper,
 	)
 	reserveModule := reservemodule.NewAppModule(appCodec, app.ReserveKeeper, app.AccountKeeper, app.BankKeeper)
 
-	app.CreditKeeper = *creditmodulekeeper.NewKeeper(
+	scopedOracleKeeper := app.CapabilityKeeper.ScopeToModule(oraclemoduletypes.ModuleName)
+	app.ScopedOracleKeeper = scopedOracleKeeper
+	app.OracleKeeper = *oraclemodulekeeper.NewKeeper(
 		appCodec,
-		keys[creditmoduletypes.StoreKey],
-		keys[creditmoduletypes.MemStoreKey],
-		app.GetSubspace(creditmoduletypes.ModuleName),
+		keys[oraclemoduletypes.StoreKey],
+		keys[oraclemoduletypes.MemStoreKey],
+		app.GetSubspace(oraclemoduletypes.ModuleName),
+		app.IBCKeeper.ChannelKeeper,
+		&app.IBCKeeper.PortKeeper,
+		scopedOracleKeeper,
+		app.BankKeeper,
+		app.AccountKeeper,
 	)
-	creditModule := creditmodule.NewAppModule(appCodec, app.CreditKeeper, app.AccountKeeper, app.BankKeeper)
+	oracleModule := oraclemodule.NewAppModule(appCodec, app.OracleKeeper, app.AccountKeeper, app.BankKeeper)
 
+	oracleIBCModule := oraclemodule.NewIBCModule(app.OracleKeeper)
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 
 	/**** IBC Routing ****/
@@ -544,6 +561,7 @@ func New(
 	ibcRouter := ibcporttypes.NewRouter()
 	ibcRouter.AddRoute(icahosttypes.SubModuleName, icaHostIBCModule).
 		AddRoute(ibctransfertypes.ModuleName, transferIBCModule)
+	ibcRouter.AddRoute(oraclemoduletypes.ModuleName, oracleIBCModule)
 	// this line is used by starport scaffolding # ibc/app/router
 	app.IBCKeeper.SetRouter(ibcRouter)
 
@@ -598,9 +616,9 @@ func New(
 		params.NewAppModule(app.ParamsKeeper),
 		transferModule,
 		icaModule,
-		oracleModule,
-		reserveModule,
 		creditModule,
+		reserveModule,
+		oracleModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 
@@ -630,9 +648,9 @@ func New(
 		group.ModuleName,
 		paramstypes.ModuleName,
 		vestingtypes.ModuleName,
-		oraclemoduletypes.ModuleName,
-		reservemoduletypes.ModuleName,
 		creditmoduletypes.ModuleName,
+		reservemoduletypes.ModuleName,
+		oraclemoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	)
 
@@ -657,9 +675,9 @@ func New(
 		paramstypes.ModuleName,
 		upgradetypes.ModuleName,
 		vestingtypes.ModuleName,
-		oraclemoduletypes.ModuleName,
-		reservemoduletypes.ModuleName,
 		creditmoduletypes.ModuleName,
+		reservemoduletypes.ModuleName,
+		oraclemoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	)
 
@@ -689,9 +707,9 @@ func New(
 		paramstypes.ModuleName,
 		upgradetypes.ModuleName,
 		vestingtypes.ModuleName,
-		oraclemoduletypes.ModuleName,
-		reservemoduletypes.ModuleName,
 		creditmoduletypes.ModuleName,
+		reservemoduletypes.ModuleName,
+		oraclemoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	)
 
@@ -721,9 +739,9 @@ func New(
 		evidence.NewAppModule(app.EvidenceKeeper),
 		ibc.NewAppModule(app.IBCKeeper),
 		transferModule,
-		oracleModule,
-		reserveModule,
 		creditModule,
+		reserveModule,
+		oracleModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 	app.sm.RegisterStoreDecoders()
@@ -928,9 +946,9 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(ibchost.ModuleName)
 	paramsKeeper.Subspace(icacontrollertypes.SubModuleName)
 	paramsKeeper.Subspace(icahosttypes.SubModuleName)
-	paramsKeeper.Subspace(oraclemoduletypes.ModuleName)
-	paramsKeeper.Subspace(reservemoduletypes.ModuleName)
 	paramsKeeper.Subspace(creditmoduletypes.ModuleName)
+	paramsKeeper.Subspace(reservemoduletypes.ModuleName)
+	paramsKeeper.Subspace(oraclemoduletypes.ModuleName)
 	// this line is used by starport scaffolding # stargate/app/paramSubspace
 
 	return paramsKeeper
