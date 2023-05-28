@@ -5,7 +5,7 @@ option go_package = "igmf/x/credit/types";
 
 message Positions {
   string address = 1; 
-  string creditID = 2; 
+  string creditIDS = 2; 
   
 }
 

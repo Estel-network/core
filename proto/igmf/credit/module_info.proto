@@ -6,5 +6,6 @@ option go_package = "igmf/x/credit/types";
 message ModuleInfo {
   uint64 totalPositions = 1; 
   uint64 totalCredited = 2; 
-  uint64 creditFee = 3;
+  uint64 creditFee = 3; 
+  
 }

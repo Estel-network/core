@@ -16,8 +16,9 @@ func TestGenesis(t *testing.T) {
 		Params: types.DefaultParams(),
 
 		ModuleInfo: types.ModuleInfo{
-			TotalPositions: 25,
-			TotalCredited:  91,
+			TotalPositions: 11,
+			TotalCredited:  21,
+			CreditFee:      25,
 		},
 		CreditList: []types.Credit{
 			{

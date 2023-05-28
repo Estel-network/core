@@ -24,9 +24,9 @@ func TestGenesisState_Validate(t *testing.T) {
 			genState: &types.GenesisState{
 
 				ModuleInfo: types.ModuleInfo{
-					TotalPositions: 94,
+					TotalPositions: 3,
 					TotalCredited:  72,
-					CreditFee:      89,
+					CreditFee:      46,
 				},
 				CreditList: []types.Credit{
 					{

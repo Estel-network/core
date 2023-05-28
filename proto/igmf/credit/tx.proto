@@ -15,5 +15,7 @@ message MsgDeposit {
   string amount  = 4;
 }
 
-message MsgDepositResponse {}
+message MsgDepositResponse {
+  string creditID = 1;
+}
 

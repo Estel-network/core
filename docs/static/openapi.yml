@@ -44157,7 +44157,7 @@ paths:
                   properties:
                     address:
                       type: string
-                    creditID:
+                    creditIDS:
                       type: string
               pagination:
                 type: object
@@ -44279,7 +44279,7 @@ paths:
                 properties:
                   address:
                     type: string
-                  creditID:
+                  creditIDS:
                     type: string
         default:
           description: An unexpected error response.
@@ -71950,6 +71950,9 @@ definitions:
         format: uint64
   igmf.credit.MsgDepositResponse:
     type: object
+    properties:
+      creditID:
+        type: string
   igmf.credit.Params:
     type: object
     description: Params defines the parameters for the module.
@@ -71958,7 +71961,7 @@ definitions:
     properties:
       address:
         type: string
-      creditID:
+      creditIDS:
         type: string
   igmf.credit.QueryAllCreditResponse:
     type: object
@@ -72025,7 +72028,7 @@ definitions:
           properties:
             address:
               type: string
-            creditID:
+            creditIDS:
               type: string
       pagination:
         type: object
@@ -72103,7 +72106,7 @@ definitions:
         properties:
           address:
             type: string
-          creditID:
+          creditIDS:
             type: string
   igmf.credit.QueryParamsResponse:
     type: object

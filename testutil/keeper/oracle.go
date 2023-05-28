@@ -86,8 +86,6 @@ func OracleKeeper(t testing.TB) (*keeper.Keeper, sdk.Context) {
 		oracleChannelKeeper{},
 		oraclePortKeeper{},
 		capabilityKeeper.ScopeToModule("OracleScopedKeeper"),
-		nil,
-		nil,
 	)
 
 	ctx := sdk.NewContext(stateStore, tmproto.Header{}, false, logger)

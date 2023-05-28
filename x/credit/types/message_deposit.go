@@ -2,6 +2,7 @@ package types
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 )
 
 const TypeMsgDeposit = "deposit"
@@ -39,16 +40,9 @@ func (msg *MsgDeposit) GetSignBytes() []byte {
 }
 
 func (msg *MsgDeposit) ValidateBasic() error {
-	/*_, err := sdk.AccAddressFromBech32(msg.Creator)
+	_, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return sdkerrors.Wrapf(sdkerrors.ErrInvalidAddress, "invalid creator address (%s)", err)
 	}
-	amount, _ := sdk.ParseCoinsNormalized(msg.Amount)
-	if !amount.IsValid() {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "amount is not a valid Coins object")
-	}
-	if amount.Empty() {
-		return sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "amount is empty")
-	}*/
 	return nil
 }

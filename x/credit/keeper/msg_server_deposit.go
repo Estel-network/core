@@ -39,13 +39,13 @@ func (k msgServer) Deposit(goCtx context.Context, msg *types.MsgDeposit) (*types
 	position, found := k.Keeper.GetPositions(ctx, msg.Creator)
 	if !found {
 		var newPosition = types.Positions{
-			Address:  msg.Creator,
-			CreditID: strconv.FormatUint(moduleInfo.TotalPositions, 10),
+			Address:   msg.Creator,
+			CreditIDS: strconv.FormatUint(moduleInfo.TotalPositions, 10),
 		}
 
 		k.Keeper.SetPositions(ctx, newPosition)
 	} else {
-		position.CreditID += " " + strconv.FormatUint(moduleInfo.TotalPositions, 10)
+		position.CreditIDS += " " + strconv.FormatUint(moduleInfo.TotalPositions, 10)
 		k.Keeper.SetPositions(ctx, position)
 	}
 
