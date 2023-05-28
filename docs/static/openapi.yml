@@ -71948,6 +71948,8 @@ definitions:
       creditFee:
         type: string
         format: uint64
+  igmf.credit.MsgDepositResponse:
+    type: object
   igmf.credit.Params:
     type: object
     description: Params defines the parameters for the module.
