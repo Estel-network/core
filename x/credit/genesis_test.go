@@ -27,6 +27,14 @@ func TestGenesis(t *testing.T) {
 				Index: "1",
 			},
 		},
+		PositionsList: []types.Positions{
+			{
+				Address: "0",
+			},
+			{
+				Address: "1",
+			},
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -40,5 +48,6 @@ func TestGenesis(t *testing.T) {
 
 	require.Equal(t, genesisState.ModuleInfo, got.ModuleInfo)
 	require.ElementsMatch(t, genesisState.CreditList, got.CreditList)
+	require.ElementsMatch(t, genesisState.PositionsList, got.PositionsList)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

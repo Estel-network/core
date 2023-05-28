@@ -36,6 +36,14 @@ func TestGenesisState_Validate(t *testing.T) {
 						Index: "1",
 					},
 				},
+				PositionsList: []types.Positions{
+					{
+						Address: "0",
+					},
+					{
+						Address: "1",
+					},
+				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -49,6 +57,20 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 					{
 						Index: "0",
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated positions",
+			genState: &types.GenesisState{
+				PositionsList: []types.Positions{
+					{
+						Address: "0",
+					},
+					{
+						Address: "0",
 					},
 				},
 			},

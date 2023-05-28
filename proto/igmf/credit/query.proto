@@ -8,6 +8,7 @@ import "cosmos/base/query/v1beta1/pagination.proto";
 import "igmf/credit/params.proto";
 import "igmf/credit/module_info.proto";
 import "igmf/credit/credit.proto";
+import "igmf/credit/positions.proto";
 
 option go_package = "igmf/x/credit/types";
 
@@ -33,6 +34,16 @@ service Query {
   }
   rpc CreditAll (QueryAllCreditRequest) returns (QueryAllCreditResponse) {
     option (google.api.http).get = "/igmf/credit/credit";
+  
+  }
+  
+  // Queries a list of Positions items.
+  rpc Positions    (QueryGetPositionsRequest) returns (QueryGetPositionsResponse) {
+    option (google.api.http).get = "/igmf/credit/positions/{address}";
+  
+  }
+  rpc PositionsAll (QueryAllPositionsRequest) returns (QueryAllPositionsResponse) {
+    option (google.api.http).get = "/igmf/credit/positions";
   
   }
 }
@@ -66,6 +77,23 @@ message QueryAllCreditRequest {
 
 message QueryAllCreditResponse {
   repeated Credit                                 credit     = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetPositionsRequest {
+  string address = 1;
+}
+
+message QueryGetPositionsResponse {
+  Positions positions = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllPositionsRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllPositionsResponse {
+  repeated Positions                              positions  = 1 [(gogoproto.nullable) = false];
            cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
