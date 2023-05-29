@@ -3,11 +3,12 @@ package otc_test
 import (
 	"testing"
 
-	"github.com/stretchr/testify/require"
 	keepertest "igmf/testutil/keeper"
 	"igmf/testutil/nullify"
 	"igmf/x/otc"
 	"igmf/x/otc/types"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestGenesis(t *testing.T) {
@@ -22,6 +23,10 @@ func TestGenesis(t *testing.T) {
 				Index: "1",
 			},
 		},
+		ModuleInfo: types.ModuleInfo{
+			ModuleIndex: 97,
+			ServiceFee:  91,
+		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -34,5 +39,6 @@ func TestGenesis(t *testing.T) {
 	nullify.Fill(got)
 
 	require.ElementsMatch(t, genesisState.TransactionsList, got.TransactionsList)
+	require.Equal(t, genesisState.ModuleInfo, got.ModuleInfo)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

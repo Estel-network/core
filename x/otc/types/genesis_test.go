@@ -3,8 +3,9 @@ package types_test
 import (
 	"testing"
 
-	"github.com/stretchr/testify/require"
 	"igmf/x/otc/types"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestGenesisState_Validate(t *testing.T) {
@@ -29,6 +30,10 @@ func TestGenesisState_Validate(t *testing.T) {
 					{
 						Index: "1",
 					},
+				},
+				ModuleInfo: types.ModuleInfo{
+					ModuleIndex: 69,
+					ServiceFee:  40,
 				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},

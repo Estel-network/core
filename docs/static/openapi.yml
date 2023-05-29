@@ -44342,6 +44342,45 @@ paths:
                   additionalProperties: {}
       tags:
         - Query
+  /igmf/otc/module_info:
+    get:
+      summary: Queries a ModuleInfo by index.
+      operationId: IgmfOtcModuleInfo
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              ModuleInfo:
+                type: object
+                properties:
+                  moduleIndex:
+                    type: string
+                    format: uint64
+                  serviceFee:
+                    type: integer
+                    format: int32
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
   /igmf/otc/params:
     get:
       summary: Parameters queries the parameters of the module.
@@ -72342,6 +72381,15 @@ definitions:
         description: params holds all the parameters of this module.
         type: object
     description: QueryParamsResponse is response type for the Query/Params RPC method.
+  igmf.otc.ModuleInfo:
+    type: object
+    properties:
+      moduleIndex:
+        type: string
+        format: uint64
+      serviceFee:
+        type: integer
+        format: int32
   igmf.otc.Params:
     type: object
     description: Params defines the parameters for the module.
@@ -72391,6 +72439,18 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
+  igmf.otc.QueryGetModuleInfoResponse:
+    type: object
+    properties:
+      ModuleInfo:
+        type: object
+        properties:
+          moduleIndex:
+            type: string
+            format: uint64
+          serviceFee:
+            type: integer
+            format: int32
   igmf.otc.QueryGetTransactionsResponse:
     type: object
     properties:

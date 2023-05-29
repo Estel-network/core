@@ -5,6 +5,7 @@ package igmf.otc;
 import "gogoproto/gogo.proto";
 import "igmf/otc/params.proto";
 import "igmf/otc/transactions.proto";
+import "igmf/otc/module_info.proto";
 
 option go_package = "igmf/x/otc/types";
 
@@ -12,5 +13,6 @@ option go_package = "igmf/x/otc/types";
 message GenesisState {
            Params       params           = 1 [(gogoproto.nullable) = false];
   repeated Transactions transactionsList = 2 [(gogoproto.nullable) = false];
+           ModuleInfo   moduleInfo       = 3 [(gogoproto.nullable) = false];
 }
 

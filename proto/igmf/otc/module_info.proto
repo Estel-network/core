@@ -1,0 +1,10 @@
+syntax = "proto3";
+package igmf.otc;
+
+option go_package = "igmf/x/otc/types";
+
+message ModuleInfo {
+  uint64 moduleIndex = 1; 
+  int32 serviceFee = 2; 
+  
+}

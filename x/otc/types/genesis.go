@@ -11,6 +11,10 @@ const DefaultIndex uint64 = 1
 func DefaultGenesis() *GenesisState {
 	return &GenesisState{
 		TransactionsList: []Transactions{},
+		ModuleInfo: ModuleInfo{
+			ModuleIndex: uint64(DefaultIndex),
+			ServiceFee:  int32(0),
+		},
 		// this line is used by starport scaffolding # genesis/types/default
 		Params: DefaultParams(),
 	}
