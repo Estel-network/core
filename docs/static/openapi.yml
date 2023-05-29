@@ -44342,6 +44342,42 @@ paths:
                   additionalProperties: {}
       tags:
         - Query
+  /igmf/otc/params:
+    get:
+      summary: Parameters queries the parameters of the module.
+      operationId: IgmfOtcParams
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              params:
+                description: params holds all the parameters of this module.
+                type: object
+            description: >-
+              QueryParamsResponse is response type for the Query/Params RPC
+              method.
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
   /igmf/reserve/params:
     get:
       summary: Parameters queries the parameters of the module.
@@ -72119,6 +72155,16 @@ definitions:
     type: object
     description: Params defines the parameters for the module.
   igmf.oracle.QueryParamsResponse:
+    type: object
+    properties:
+      params:
+        description: params holds all the parameters of this module.
+        type: object
+    description: QueryParamsResponse is response type for the Query/Params RPC method.
+  igmf.otc.Params:
+    type: object
+    description: Params defines the parameters for the module.
+  igmf.otc.QueryParamsResponse:
     type: object
     properties:
       params:

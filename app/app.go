@@ -113,6 +113,9 @@ import (
 	reservemodulekeeper "igmf/x/reserve/keeper"
 	reservemoduletypes "igmf/x/reserve/types"
 
+	otcmodule "igmf/x/otc"
+	otcmodulekeeper "igmf/x/otc/keeper"
+	otcmoduletypes "igmf/x/otc/types"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
 	appparams "igmf/app/params"
@@ -174,6 +177,7 @@ var (
 		oraclemodule.AppModuleBasic{},
 		creditmodule.AppModuleBasic{},
 		reservemodule.AppModuleBasic{},
+		otcmodule.AppModuleBasic{},
 		// this line is used by starport scaffolding # stargate/app/moduleBasic
 	)
 
@@ -189,6 +193,7 @@ var (
 		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
 		creditmoduletypes.ModuleName:   {authtypes.Minter, authtypes.Burner, authtypes.Staking},
 		reservemoduletypes.ModuleName:  {authtypes.Minter, authtypes.Burner, authtypes.Staking},
+		otcmoduletypes.ModuleName:      {authtypes.Minter, authtypes.Burner, authtypes.Staking},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 )
@@ -255,6 +260,8 @@ type App struct {
 	CreditKeeper creditmodulekeeper.Keeper
 
 	ReserveKeeper reservemodulekeeper.Keeper
+
+	OtcKeeper otcmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// mm is the module manager
@@ -302,6 +309,7 @@ func New(
 		oraclemoduletypes.StoreKey,
 		creditmoduletypes.StoreKey,
 		reservemoduletypes.StoreKey,
+		otcmoduletypes.StoreKey,
 		// this line is used by starport scaffolding # stargate/app/storeKey
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
@@ -553,6 +561,20 @@ func New(
 	)
 	reserveModule := reservemodule.NewAppModule(appCodec, app.ReserveKeeper, app.AccountKeeper, app.BankKeeper)
 
+	app.OtcKeeper = *otcmodulekeeper.NewKeeper(
+		appCodec,
+		keys[otcmoduletypes.StoreKey],
+		keys[otcmoduletypes.MemStoreKey],
+		app.GetSubspace(otcmoduletypes.ModuleName),
+
+		app.BankKeeper,
+		app.AccountKeeper,
+		app.ReserveKeeper,
+		app.OracleKeeper,
+		app.CreditKeeper,
+	)
+	otcModule := otcmodule.NewAppModule(appCodec, app.OtcKeeper, app.AccountKeeper, app.BankKeeper)
+
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 
 	/**** IBC Routing ****/
@@ -622,6 +644,7 @@ func New(
 		oracleModule,
 		creditModule,
 		reserveModule,
+		otcModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 
@@ -654,6 +677,7 @@ func New(
 		oraclemoduletypes.ModuleName,
 		creditmoduletypes.ModuleName,
 		reservemoduletypes.ModuleName,
+		otcmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	)
 
@@ -681,6 +705,7 @@ func New(
 		oraclemoduletypes.ModuleName,
 		creditmoduletypes.ModuleName,
 		reservemoduletypes.ModuleName,
+		otcmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	)
 
@@ -713,6 +738,7 @@ func New(
 		oraclemoduletypes.ModuleName,
 		creditmoduletypes.ModuleName,
 		reservemoduletypes.ModuleName,
+		otcmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	)
 
@@ -745,6 +771,7 @@ func New(
 		oracleModule,
 		creditModule,
 		reserveModule,
+		otcModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 	)
 	app.sm.RegisterStoreDecoders()
@@ -952,6 +979,7 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(oraclemoduletypes.ModuleName)
 	paramsKeeper.Subspace(creditmoduletypes.ModuleName)
 	paramsKeeper.Subspace(reservemoduletypes.ModuleName)
+	paramsKeeper.Subspace(otcmoduletypes.ModuleName)
 	// this line is used by starport scaffolding # stargate/app/paramSubspace
 
 	return paramsKeeper
