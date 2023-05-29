@@ -16,4 +16,8 @@ The main goal of the project is to create a truly trustless decentralized stable
 - Credits are fully backed and overcollateralized. There can't be more credits than collateral.
 - Stable borrowing fee instead of long term debt.
 
+# Other capabilities
+
+- Trustless OTC transactions
+
 Feel free to reach me for any question or suggestion: randcnx@proton.me

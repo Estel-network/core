@@ -1,12 +1,16 @@
 syntax = "proto3";
+
 package igmf.otc;
 
 import "gogoproto/gogo.proto";
 import "igmf/otc/params.proto";
+import "igmf/otc/transactions.proto";
 
 option go_package = "igmf/x/otc/types";
 
 // GenesisState defines the otc module's genesis state.
 message GenesisState {
-  Params params = 1 [(gogoproto.nullable) = false];
+           Params       params           = 1 [(gogoproto.nullable) = false];
+  repeated Transactions transactionsList = 2 [(gogoproto.nullable) = false];
 }
+

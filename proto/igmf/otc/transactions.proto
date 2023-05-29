@@ -1,0 +1,15 @@
+syntax = "proto3";
+package igmf.otc;
+
+option go_package = "igmf/x/otc/types";
+
+message Transactions {
+  string index = 1; 
+  string seller = 2; 
+  string buyer = 3; 
+  string denomSellAmount = 4; 
+  string denomBuyAmount = 5; 
+  bool completed = 6; 
+  
+}
+

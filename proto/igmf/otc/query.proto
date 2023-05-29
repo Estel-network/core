@@ -1,26 +1,58 @@
 syntax = "proto3";
+
 package igmf.otc;
 
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "igmf/otc/params.proto";
+import "igmf/otc/transactions.proto";
 
 option go_package = "igmf/x/otc/types";
 
 // Query defines the gRPC querier service.
 service Query {
+  
   // Parameters queries the parameters of the module.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/igmf/otc/params";
+  
+  }
+  
+  // Queries a list of Transactions items.
+  rpc Transactions    (QueryGetTransactionsRequest) returns (QueryGetTransactionsResponse) {
+    option (google.api.http).get = "/igmf/otc/transactions/{index}";
+  
+  }
+  rpc TransactionsAll (QueryAllTransactionsRequest) returns (QueryAllTransactionsResponse) {
+    option (google.api.http).get = "/igmf/otc/transactions";
+  
   }
 }
-
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
 
 // QueryParamsResponse is response type for the Query/Params RPC method.
 message QueryParamsResponse {
+  
   // params holds all the parameters of this module.
   Params params = 1 [(gogoproto.nullable) = false];
 }
+
+message QueryGetTransactionsRequest {
+  string index = 1;
+}
+
+message QueryGetTransactionsResponse {
+  Transactions transactions = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllTransactionsRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllTransactionsResponse {
+  repeated Transactions                           transactions = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination   = 2;
+}
+
