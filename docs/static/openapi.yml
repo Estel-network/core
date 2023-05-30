@@ -72390,6 +72390,11 @@ definitions:
       serviceFee:
         type: integer
         format: int32
+  igmf.otc.MsgCreateTransactionResponse:
+    type: object
+    properties:
+      result:
+        type: string
   igmf.otc.Params:
     type: object
     description: Params defines the parameters for the module.

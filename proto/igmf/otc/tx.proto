@@ -1,7 +1,21 @@
 syntax = "proto3";
+
 package igmf.otc;
 
 option go_package = "igmf/x/otc/types";
 
 // Msg defines the Msg service.
-service Msg {}
+service Msg {
+  rpc CreateTransaction (MsgCreateTransaction) returns (MsgCreateTransactionResponse);
+}
+message MsgCreateTransaction {
+  string creator         = 1;
+  string buyer           = 2;
+  string denomSellAmount = 3;
+  string denomBuyAmount  = 4;
+}
+
+message MsgCreateTransactionResponse {
+  string result = 1;
+}
+
