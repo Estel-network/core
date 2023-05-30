@@ -72395,6 +72395,11 @@ definitions:
     properties:
       result:
         type: string
+  igmf.otc.MsgEndTransactionResponse:
+    type: object
+    properties:
+      result:
+        type: string
   igmf.otc.Params:
     type: object
     description: Params defines the parameters for the module.

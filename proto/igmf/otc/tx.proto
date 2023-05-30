@@ -7,6 +7,7 @@ option go_package = "igmf/x/otc/types";
 // Msg defines the Msg service.
 service Msg {
   rpc CreateTransaction (MsgCreateTransaction) returns (MsgCreateTransactionResponse);
+  rpc EndTransaction    (MsgEndTransaction   ) returns (MsgEndTransactionResponse   );
 }
 message MsgCreateTransaction {
   string creator         = 1;
@@ -16,6 +17,15 @@ message MsgCreateTransaction {
 }
 
 message MsgCreateTransactionResponse {
+  string result = 1;
+}
+
+message MsgEndTransaction {
+  string creator = 1;
+  string id      = 2;
+}
+
+message MsgEndTransactionResponse {
   string result = 1;
 }
 

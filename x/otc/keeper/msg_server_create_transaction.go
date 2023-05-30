@@ -19,7 +19,7 @@ func (k msgServer) CreateTransaction(goCtx context.Context, msg *types.MsgCreate
 
 	creator, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	buyer := msg.Buyer
@@ -32,12 +32,12 @@ func (k msgServer) CreateTransaction(goCtx context.Context, msg *types.MsgCreate
 
 	denomSellAmount, err := sdk.ParseCoinsNormalized(msg.DenomSellAmount)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	denomBuyAmount, err := sdk.ParseCoinsNormalized(msg.DenomBuyAmount)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 
 	_ = denomBuyAmount
@@ -51,14 +51,13 @@ func (k msgServer) CreateTransaction(goCtx context.Context, msg *types.MsgCreate
 		Completed:       false,
 	}
 
-	moduleInfo.ModuleIndex++
-	k.Keeper.SetModuleInfo(ctx, moduleInfo)
-
 	sdkError := k.bankKeeper.SendCoinsFromAccountToModule(ctx, creator, types.ModuleName, denomSellAmount)
 	if sdkError != nil {
 		return nil, sdkError
 	}
 
+	moduleInfo.ModuleIndex++
+	k.Keeper.SetModuleInfo(ctx, moduleInfo)
 	k.Keeper.SetTransactions(ctx, transaction)
 
 	return &types.MsgCreateTransactionResponse{}, nil
