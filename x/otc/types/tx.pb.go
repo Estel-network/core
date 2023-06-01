@@ -235,17 +235,115 @@ func (m *MsgEndTransactionResponse) GetResult() string {
 	return ""
 }
 
+type MsgCloseTransaction struct {
+	Creator string `protobuf:"bytes,1,opt,name=creator,proto3" json:"creator,omitempty"`
+	Id      string `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
+}
+
+func (m *MsgCloseTransaction) Reset()         { *m = MsgCloseTransaction{} }
+func (m *MsgCloseTransaction) String() string { return proto.CompactTextString(m) }
+func (*MsgCloseTransaction) ProtoMessage()    {}
+func (*MsgCloseTransaction) Descriptor() ([]byte, []int) {
+	return fileDescriptor_4b61ab5728369b41, []int{4}
+}
+func (m *MsgCloseTransaction) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgCloseTransaction) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgCloseTransaction.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgCloseTransaction) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgCloseTransaction.Merge(m, src)
+}
+func (m *MsgCloseTransaction) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgCloseTransaction) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgCloseTransaction.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgCloseTransaction proto.InternalMessageInfo
+
+func (m *MsgCloseTransaction) GetCreator() string {
+	if m != nil {
+		return m.Creator
+	}
+	return ""
+}
+
+func (m *MsgCloseTransaction) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+type MsgCloseTransactionResponse struct {
+	Result string `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+}
+
+func (m *MsgCloseTransactionResponse) Reset()         { *m = MsgCloseTransactionResponse{} }
+func (m *MsgCloseTransactionResponse) String() string { return proto.CompactTextString(m) }
+func (*MsgCloseTransactionResponse) ProtoMessage()    {}
+func (*MsgCloseTransactionResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_4b61ab5728369b41, []int{5}
+}
+func (m *MsgCloseTransactionResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *MsgCloseTransactionResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_MsgCloseTransactionResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *MsgCloseTransactionResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_MsgCloseTransactionResponse.Merge(m, src)
+}
+func (m *MsgCloseTransactionResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *MsgCloseTransactionResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_MsgCloseTransactionResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_MsgCloseTransactionResponse proto.InternalMessageInfo
+
+func (m *MsgCloseTransactionResponse) GetResult() string {
+	if m != nil {
+		return m.Result
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*MsgCreateTransaction)(nil), "igmf.otc.MsgCreateTransaction")
 	proto.RegisterType((*MsgCreateTransactionResponse)(nil), "igmf.otc.MsgCreateTransactionResponse")
 	proto.RegisterType((*MsgEndTransaction)(nil), "igmf.otc.MsgEndTransaction")
 	proto.RegisterType((*MsgEndTransactionResponse)(nil), "igmf.otc.MsgEndTransactionResponse")
+	proto.RegisterType((*MsgCloseTransaction)(nil), "igmf.otc.MsgCloseTransaction")
+	proto.RegisterType((*MsgCloseTransactionResponse)(nil), "igmf.otc.MsgCloseTransactionResponse")
 }
 
 func init() { proto.RegisterFile("igmf/otc/tx.proto", fileDescriptor_4b61ab5728369b41) }
 
 var fileDescriptor_4b61ab5728369b41 = []byte{
-	// 299 bytes of a gzipped FileDescriptorProto
+	// 336 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0xcc, 0x4c, 0xcf, 0x4d,
 	0xd3, 0xcf, 0x2f, 0x49, 0xd6, 0x2f, 0xa9, 0xd0, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x00,
 	0x09, 0xe9, 0xe5, 0x97, 0x24, 0x2b, 0xcd, 0x60, 0xe4, 0x12, 0xf1, 0x2d, 0x4e, 0x77, 0x2e, 0x4a,
@@ -258,13 +356,15 @@ var fileDescriptor_4b61ab5728369b41 = []byte{
 	0xe2, 0x82, 0xfc, 0xbc, 0xe2, 0x54, 0x21, 0x31, 0x2e, 0xb6, 0xa2, 0xd4, 0xe2, 0xd2, 0x9c, 0x12,
 	0xa8, 0x03, 0xa1, 0x3c, 0x25, 0x5b, 0x2e, 0x41, 0xdf, 0xe2, 0x74, 0xd7, 0xbc, 0x14, 0xe2, 0xbc,
 	0xc3, 0xc7, 0xc5, 0x94, 0x99, 0x02, 0xf5, 0x0b, 0x53, 0x66, 0x8a, 0x92, 0x31, 0x97, 0x24, 0x86,
-	0x76, 0x42, 0x76, 0x1a, 0x6d, 0x63, 0xe4, 0x62, 0xf6, 0x2d, 0x4e, 0x17, 0x8a, 0xe6, 0x12, 0xc4,
-	0x0c, 0x4a, 0x39, 0x3d, 0x58, 0x70, 0xeb, 0x61, 0xf3, 0x90, 0x94, 0x1a, 0x7e, 0x79, 0xb8, 0xe5,
-	0x41, 0x5c, 0x7c, 0x68, 0xbe, 0x92, 0x46, 0xd1, 0x89, 0x2a, 0x29, 0xa5, 0x8c, 0x47, 0x12, 0x66,
-	0xa6, 0x93, 0xd6, 0x89, 0x47, 0x72, 0x8c, 0x17, 0x1e, 0xc9, 0x31, 0x3e, 0x78, 0x24, 0xc7, 0x38,
-	0xe1, 0xb1, 0x1c, 0xc3, 0x85, 0xc7, 0x72, 0x0c, 0x37, 0x1e, 0xcb, 0x31, 0x44, 0x09, 0x80, 0x93,
-	0x4d, 0x05, 0x24, 0xe1, 0x54, 0x16, 0xa4, 0x16, 0x27, 0xb1, 0x81, 0x13, 0x8f, 0x31, 0x20, 0x00,
-	0x00, 0xff, 0xff, 0x9c, 0xad, 0xd4, 0x4e, 0x51, 0x02, 0x00, 0x00,
+	0x76, 0x82, 0x76, 0xda, 0x73, 0x09, 0x83, 0xdc, 0x9a, 0x93, 0x5f, 0x9c, 0x4a, 0x9e, 0xad, 0xa6,
+	0x5c, 0xd2, 0x58, 0x0c, 0x20, 0x64, 0xaf, 0xd1, 0x04, 0x26, 0x2e, 0x66, 0xdf, 0xe2, 0x74, 0xa1,
+	0x68, 0x2e, 0x41, 0xcc, 0x28, 0x94, 0xd3, 0x83, 0x45, 0xb3, 0x1e, 0xb6, 0x80, 0x94, 0x52, 0xc3,
+	0x2f, 0x0f, 0xb7, 0x3c, 0x88, 0x8b, 0x0f, 0x2d, 0x34, 0xa5, 0x51, 0x74, 0xa2, 0x4a, 0x4a, 0x29,
+	0xe3, 0x91, 0x84, 0x9b, 0x19, 0xc1, 0x25, 0x80, 0x11, 0x5a, 0xb2, 0xa8, 0xee, 0x41, 0x93, 0x96,
+	0x52, 0xc5, 0x2b, 0x0d, 0x33, 0xd9, 0x49, 0xeb, 0xc4, 0x23, 0x39, 0xc6, 0x0b, 0x8f, 0xe4, 0x18,
+	0x1f, 0x3c, 0x92, 0x63, 0x9c, 0xf0, 0x58, 0x8e, 0xe1, 0xc2, 0x63, 0x39, 0x86, 0x1b, 0x8f, 0xe5,
+	0x18, 0xa2, 0x04, 0xc0, 0x19, 0xa1, 0x02, 0x92, 0x15, 0x2a, 0x0b, 0x52, 0x8b, 0x93, 0xd8, 0xc0,
+	0xd9, 0xc1, 0x18, 0x10, 0x00, 0x00, 0xff, 0xff, 0x57, 0x9c, 0xa4, 0x55, 0x23, 0x03, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -281,6 +381,7 @@ const _ = grpc.SupportPackageIsVersion4
 type MsgClient interface {
 	CreateTransaction(ctx context.Context, in *MsgCreateTransaction, opts ...grpc.CallOption) (*MsgCreateTransactionResponse, error)
 	EndTransaction(ctx context.Context, in *MsgEndTransaction, opts ...grpc.CallOption) (*MsgEndTransactionResponse, error)
+	CloseTransaction(ctx context.Context, in *MsgCloseTransaction, opts ...grpc.CallOption) (*MsgCloseTransactionResponse, error)
 }
 
 type msgClient struct {
@@ -309,10 +410,20 @@ func (c *msgClient) EndTransaction(ctx context.Context, in *MsgEndTransaction, o
 	return out, nil
 }
 
+func (c *msgClient) CloseTransaction(ctx context.Context, in *MsgCloseTransaction, opts ...grpc.CallOption) (*MsgCloseTransactionResponse, error) {
+	out := new(MsgCloseTransactionResponse)
+	err := c.cc.Invoke(ctx, "/igmf.otc.Msg/CloseTransaction", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MsgServer is the server API for Msg service.
 type MsgServer interface {
 	CreateTransaction(context.Context, *MsgCreateTransaction) (*MsgCreateTransactionResponse, error)
 	EndTransaction(context.Context, *MsgEndTransaction) (*MsgEndTransactionResponse, error)
+	CloseTransaction(context.Context, *MsgCloseTransaction) (*MsgCloseTransactionResponse, error)
 }
 
 // UnimplementedMsgServer can be embedded to have forward compatible implementations.
@@ -324,6 +435,9 @@ func (*UnimplementedMsgServer) CreateTransaction(ctx context.Context, req *MsgCr
 }
 func (*UnimplementedMsgServer) EndTransaction(ctx context.Context, req *MsgEndTransaction) (*MsgEndTransactionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EndTransaction not implemented")
+}
+func (*UnimplementedMsgServer) CloseTransaction(ctx context.Context, req *MsgCloseTransaction) (*MsgCloseTransactionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CloseTransaction not implemented")
 }
 
 func RegisterMsgServer(s grpc1.Server, srv MsgServer) {
@@ -366,6 +480,24 @@ func _Msg_EndTransaction_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Msg_CloseTransaction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MsgCloseTransaction)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MsgServer).CloseTransaction(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/igmf.otc.Msg/CloseTransaction",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MsgServer).CloseTransaction(ctx, req.(*MsgCloseTransaction))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Msg_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "igmf.otc.Msg",
 	HandlerType: (*MsgServer)(nil),
@@ -377,6 +509,10 @@ var _Msg_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "EndTransaction",
 			Handler:    _Msg_EndTransaction_Handler,
+		},
+		{
+			MethodName: "CloseTransaction",
+			Handler:    _Msg_CloseTransaction_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -531,6 +667,73 @@ func (m *MsgEndTransactionResponse) MarshalToSizedBuffer(dAtA []byte) (int, erro
 	return len(dAtA) - i, nil
 }
 
+func (m *MsgCloseTransaction) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgCloseTransaction) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgCloseTransaction) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Id) > 0 {
+		i -= len(m.Id)
+		copy(dAtA[i:], m.Id)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Id)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Creator) > 0 {
+		i -= len(m.Creator)
+		copy(dAtA[i:], m.Creator)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Creator)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *MsgCloseTransactionResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *MsgCloseTransactionResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *MsgCloseTransactionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if len(m.Result) > 0 {
+		i -= len(m.Result)
+		copy(dAtA[i:], m.Result)
+		i = encodeVarintTx(dAtA, i, uint64(len(m.Result)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintTx(dAtA []byte, offset int, v uint64) int {
 	offset -= sovTx(v)
 	base := offset
@@ -598,6 +801,36 @@ func (m *MsgEndTransaction) Size() (n int) {
 }
 
 func (m *MsgEndTransactionResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Result)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgCloseTransaction) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Creator)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	l = len(m.Id)
+	if l > 0 {
+		n += 1 + l + sovTx(uint64(l))
+	}
+	return n
+}
+
+func (m *MsgCloseTransactionResponse) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1017,6 +1250,202 @@ func (m *MsgEndTransactionResponse) Unmarshal(dAtA []byte) error {
 		}
 		if fieldNum <= 0 {
 			return fmt.Errorf("proto: MsgEndTransactionResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Result", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Result = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgCloseTransaction) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgCloseTransaction: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgCloseTransaction: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Creator", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Creator = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Id", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowTx
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthTx
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthTx
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Id = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipTx(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if (skippy < 0) || (iNdEx+skippy) < 0 {
+				return ErrInvalidLengthTx
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *MsgCloseTransactionResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowTx
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: MsgCloseTransactionResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: MsgCloseTransactionResponse: illegal tag %d (wire type %d)", fieldNum, wire)
 		}
 		switch fieldNum {
 		case 1:

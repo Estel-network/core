@@ -72390,6 +72390,11 @@ definitions:
       serviceFee:
         type: integer
         format: int32
+  igmf.otc.MsgCloseTransactionResponse:
+    type: object
+    properties:
+      result:
+        type: string
   igmf.otc.MsgCreateTransactionResponse:
     type: object
     properties:
