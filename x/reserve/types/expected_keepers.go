@@ -9,6 +9,10 @@ type OracleKeeper interface {
 	// Methods imported from oracle should be defined here
 }
 
+type CreditKeeper interface {
+	// Methods imported from credit should be defined here
+}
+
 // AccountKeeper defines the expected account keeper used for simulations (noalias)
 type AccountKeeper interface {
 	GetAccount(ctx sdk.Context, addr sdk.AccAddress) types.AccountI

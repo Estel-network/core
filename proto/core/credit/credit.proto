@@ -1,0 +1,14 @@
+syntax = "proto3";
+package core.credit;
+
+option go_package = "core/x/credit/types";
+
+message Credit {
+  string owner = 1; 
+  uint64 credited = 2; 
+  uint64 rewarding = 3; 
+  repeated uint64 collateral = 4; 
+  uint64 bond = 5; 
+  
+}
+

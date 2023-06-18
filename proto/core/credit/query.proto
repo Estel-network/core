@@ -1,26 +1,99 @@
 syntax = "proto3";
+
 package core.credit;
 
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "core/credit/params.proto";
+import "core/credit/module_info.proto";
+import "core/credit/credit.proto";
+import "core/credit/collateral.proto";
 
 option go_package = "core/x/credit/types";
 
 // Query defines the gRPC querier service.
 service Query {
+  
   // Parameters queries the parameters of the module.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/core/credit/params";
+  
+  }
+  
+  // Queries a ModuleInfo by index.
+  rpc ModuleInfo (QueryGetModuleInfoRequest) returns (QueryGetModuleInfoResponse) {
+    option (google.api.http).get = "/core/credit/module_info";
+  
+  }
+  
+  // Queries a list of Credit items.
+  rpc Credit    (QueryGetCreditRequest) returns (QueryGetCreditResponse) {
+    option (google.api.http).get = "/core/credit/credit/{owner}";
+  
+  }
+  rpc CreditAll (QueryAllCreditRequest) returns (QueryAllCreditResponse) {
+    option (google.api.http).get = "/core/credit/credit";
+  
+  }
+  
+  // Queries a list of Collateral items.
+  rpc Collateral    (QueryGetCollateralRequest) returns (QueryGetCollateralResponse) {
+    option (google.api.http).get = "/core/credit/collateral/{index}";
+  
+  }
+  rpc CollateralAll (QueryAllCollateralRequest) returns (QueryAllCollateralResponse) {
+    option (google.api.http).get = "/core/credit/collateral";
+  
   }
 }
-
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
 
 // QueryParamsResponse is response type for the Query/Params RPC method.
 message QueryParamsResponse {
+  
   // params holds all the parameters of this module.
   Params params = 1 [(gogoproto.nullable) = false];
 }
+
+message QueryGetModuleInfoRequest {}
+
+message QueryGetModuleInfoResponse {
+  ModuleInfo ModuleInfo = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryGetCreditRequest {
+  string owner = 1;
+}
+
+message QueryGetCreditResponse {
+  Credit credit = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllCreditRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllCreditResponse {
+  repeated Credit                                 credit     = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetCollateralRequest {
+  string index = 1;
+}
+
+message QueryGetCollateralResponse {
+  Collateral collateral = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllCollateralRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllCollateralResponse {
+  repeated Collateral                             collateral = 1 [(gogoproto.nullable) = false];
+           cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+

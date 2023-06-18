@@ -1,12 +1,20 @@
 syntax = "proto3";
+
 package core.credit;
 
 import "gogoproto/gogo.proto";
 import "core/credit/params.proto";
+import "core/credit/module_info.proto";
+import "core/credit/credit.proto";
+import "core/credit/collateral.proto";
 
 option go_package = "core/x/credit/types";
 
 // GenesisState defines the credit module's genesis state.
 message GenesisState {
-  Params params = 1 [(gogoproto.nullable) = false];
+           Params     params         = 1 [(gogoproto.nullable) = false];
+           ModuleInfo moduleInfo     = 2 [(gogoproto.nullable) = false];
+  repeated Credit     creditList     = 3 [(gogoproto.nullable) = false];
+  repeated Collateral collateralList = 4 [(gogoproto.nullable) = false];
 }
+

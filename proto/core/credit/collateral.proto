@@ -1,0 +1,13 @@
+syntax = "proto3";
+package core.credit;
+
+option go_package = "core/x/credit/types";
+
+message Collateral {
+  string index = 1; 
+  string owner = 2; 
+  string denom = 3; 
+  uint64 amount = 4; 
+  
+}
+
