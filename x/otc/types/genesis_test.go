@@ -3,13 +3,12 @@ package types_test
 import (
 	"testing"
 
-	"igmf/x/otc/types"
-
+	"core/x/otc/types"
 	"github.com/stretchr/testify/require"
 )
 
 func TestGenesisState_Validate(t *testing.T) {
-	for _, tc := range []struct {
+	tests := []struct {
 		desc     string
 		genState *types.GenesisState
 		valid    bool
@@ -20,41 +19,16 @@ func TestGenesisState_Validate(t *testing.T) {
 			valid:    true,
 		},
 		{
-			desc: "valid genesis state",
+			desc:     "valid genesis state",
 			genState: &types.GenesisState{
 
-				TransactionsList: []types.Transactions{
-					{
-						Index: "0",
-					},
-					{
-						Index: "1",
-					},
-				},
-				ModuleInfo: types.ModuleInfo{
-					ModuleIndex: 69,
-					ServiceFee:  40,
-				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
 		},
-		{
-			desc: "duplicated transactions",
-			genState: &types.GenesisState{
-				TransactionsList: []types.Transactions{
-					{
-						Index: "0",
-					},
-					{
-						Index: "0",
-					},
-				},
-			},
-			valid: false,
-		},
 		// this line is used by starport scaffolding # types/genesis/testcase
-	} {
+	}
+	for _, tc := range tests {
 		t.Run(tc.desc, func(t *testing.T) {
 			err := tc.genState.Validate()
 			if tc.valid {

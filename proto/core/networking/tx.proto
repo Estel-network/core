@@ -1,0 +1,7 @@
+syntax = "proto3";
+package core.networking;
+
+option go_package = "core/x/networking/types";
+
+// Msg defines the Msg service.
+service Msg {}

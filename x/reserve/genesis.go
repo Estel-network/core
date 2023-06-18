@@ -1,9 +1,9 @@
 package reserve
 
 import (
+	"core/x/reserve/keeper"
+	"core/x/reserve/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"igmf/x/reserve/keeper"
-	"igmf/x/reserve/types"
 )
 
 // InitGenesis initializes the module's state from a provided genesis state.

@@ -8,7 +8,7 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client"
 	// "github.com/cosmos/cosmos-sdk/client/flags"
-	"igmf/x/reserve/types"
+	"core/x/reserve/types"
 )
 
 var (

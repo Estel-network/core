@@ -1,8 +1,8 @@
 package keeper
 
 import (
+	"core/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"igmf/x/oracle/types"
 )
 
 // GetParams get all parameters as types.Params

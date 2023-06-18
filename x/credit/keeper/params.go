@@ -1,8 +1,8 @@
 package keeper
 
 import (
+	"core/x/credit/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"igmf/x/credit/types"
 )
 
 // GetParams get all parameters as types.Params

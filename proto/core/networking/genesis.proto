@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package core.networking;
+
+import "gogoproto/gogo.proto";
+import "core/networking/params.proto";
+
+option go_package = "core/x/networking/types";
+
+// GenesisState defines the networking module's genesis state.
+message GenesisState {
+  Params params  = 1 [(gogoproto.nullable) = false];
+  string port_id = 2;
+}
+

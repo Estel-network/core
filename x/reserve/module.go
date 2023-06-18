@@ -9,16 +9,16 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/spf13/cobra"
 
-	abci "github.com/tendermint/tendermint/abci/types"
+	abci "github.com/cometbft/cometbft/abci/types"
 
+	"core/x/reserve/client/cli"
+	"core/x/reserve/keeper"
+	"core/x/reserve/types"
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
-	"igmf/x/reserve/client/cli"
-	"igmf/x/reserve/keeper"
-	"igmf/x/reserve/types"
 )
 
 var (
@@ -108,17 +108,6 @@ func NewAppModule(
 		accountKeeper:  accountKeeper,
 		bankKeeper:     bankKeeper,
 	}
-}
-
-// Deprecated: use RegisterServices
-func (am AppModule) Route() sdk.Route { return sdk.Route{} }
-
-// Deprecated: use RegisterServices
-func (AppModule) QuerierRoute() string { return types.RouterKey }
-
-// Deprecated: use RegisterServices
-func (am AppModule) LegacyQuerierHandler(_ *codec.LegacyAmino) sdk.Querier {
-	return nil
 }
 
 // RegisterServices registers a gRPC query service to respond to the module-specific gRPC queries

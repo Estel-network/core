@@ -1,0 +1,7 @@
+syntax = "proto3";
+package core.oracle;
+
+option go_package = "core/x/oracle/types";
+
+// Msg defines the Msg service.
+service Msg {}

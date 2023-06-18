@@ -1,0 +1,13 @@
+syntax = "proto3";
+package core.oracle;
+
+option go_package = "core/x/oracle/types";
+
+message OraclePacketData {
+    oneof packet {
+        NoData noData = 1;
+    }
+}
+
+message NoData {
+}

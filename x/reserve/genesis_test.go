@@ -3,11 +3,11 @@ package reserve_test
 import (
 	"testing"
 
+	keepertest "core/testutil/keeper"
+	"core/testutil/nullify"
+	"core/x/reserve"
+	"core/x/reserve/types"
 	"github.com/stretchr/testify/require"
-	keepertest "igmf/testutil/keeper"
-	"igmf/testutil/nullify"
-	"igmf/x/reserve"
-	"igmf/x/reserve/types"
 )
 
 func TestGenesis(t *testing.T) {

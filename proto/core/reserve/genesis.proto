@@ -1,0 +1,12 @@
+syntax = "proto3";
+package core.reserve;
+
+import "gogoproto/gogo.proto";
+import "core/reserve/params.proto";
+
+option go_package = "core/x/reserve/types";
+
+// GenesisState defines the reserve module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+}

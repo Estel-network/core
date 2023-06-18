@@ -1,9 +1,9 @@
 package oracle
 
 import (
+	"core/x/oracle/keeper"
+	"core/x/oracle/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"igmf/x/oracle/keeper"
-	"igmf/x/oracle/types"
 )
 
 // InitGenesis initializes the module's state from a provided genesis state.

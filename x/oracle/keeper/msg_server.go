@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"igmf/x/oracle/types"
+	"core/x/oracle/types"
 )
 
 type msgServer struct {

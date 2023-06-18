@@ -3,11 +3,11 @@ package oracle_test
 import (
 	"testing"
 
+	keepertest "core/testutil/keeper"
+	"core/testutil/nullify"
+	"core/x/oracle"
+	"core/x/oracle/types"
 	"github.com/stretchr/testify/require"
-	keepertest "igmf/testutil/keeper"
-	"igmf/testutil/nullify"
-	"igmf/x/oracle"
-	"igmf/x/oracle/types"
 )
 
 func TestGenesis(t *testing.T) {

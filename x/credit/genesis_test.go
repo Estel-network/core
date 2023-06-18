@@ -3,11 +3,10 @@ package credit_test
 import (
 	"testing"
 
-	keepertest "igmf/testutil/keeper"
-	"igmf/testutil/nullify"
-	"igmf/x/credit"
-	"igmf/x/credit/types"
-
+	keepertest "core/testutil/keeper"
+	"core/testutil/nullify"
+	"core/x/credit"
+	"core/x/credit/types"
 	"github.com/stretchr/testify/require"
 )
 
@@ -15,27 +14,6 @@ func TestGenesis(t *testing.T) {
 	genesisState := types.GenesisState{
 		Params: types.DefaultParams(),
 
-		ModuleInfo: types.ModuleInfo{
-			TotalPositions: 11,
-			TotalCredited:  21,
-			CreditFee:      25,
-		},
-		CreditList: []types.Credit{
-			{
-				Index: "0",
-			},
-			{
-				Index: "1",
-			},
-		},
-		PositionsList: []types.Positions{
-			{
-				Address: "0",
-			},
-			{
-				Address: "1",
-			},
-		},
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -47,8 +25,5 @@ func TestGenesis(t *testing.T) {
 	nullify.Fill(&genesisState)
 	nullify.Fill(got)
 
-	require.Equal(t, genesisState.ModuleInfo, got.ModuleInfo)
-	require.ElementsMatch(t, genesisState.CreditList, got.CreditList)
-	require.ElementsMatch(t, genesisState.PositionsList, got.PositionsList)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

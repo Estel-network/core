@@ -10,7 +10,7 @@ import (
 	// "github.com/cosmos/cosmos-sdk/client/flags"
 	// sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"igmf/x/otc/types"
+	"core/x/otc/types"
 )
 
 // GetQueryCmd returns the cli query commands for this module
@@ -25,9 +25,6 @@ func GetQueryCmd(queryRoute string) *cobra.Command {
 	}
 
 	cmd.AddCommand(CmdQueryParams())
-	cmd.AddCommand(CmdListTransactions())
-	cmd.AddCommand(CmdShowTransactions())
-	cmd.AddCommand(CmdShowModuleInfo())
 	// this line is used by starport scaffolding # 1
 
 	return cmd

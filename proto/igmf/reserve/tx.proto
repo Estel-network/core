@@ -1,7 +1,0 @@
-syntax = "proto3";
-package igmf.reserve;
-
-option go_package = "igmf/x/reserve/types";
-
-// Msg defines the Msg service.
-service Msg {}

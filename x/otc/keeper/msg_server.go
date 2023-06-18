@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"igmf/x/otc/types"
+	"core/x/otc/types"
 )
 
 type msgServer struct {

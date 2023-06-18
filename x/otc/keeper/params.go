@@ -1,8 +1,8 @@
 package keeper
 
 import (
+	"core/x/otc/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"igmf/x/otc/types"
 )
 
 // GetParams get all parameters as types.Params

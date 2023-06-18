@@ -4,13 +4,20 @@ import (
 	"context"
 	"testing"
 
+	keepertest "core/testutil/keeper"
+	"core/x/reserve/keeper"
+	"core/x/reserve/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	keepertest "igmf/testutil/keeper"
-	"igmf/x/reserve/keeper"
-	"igmf/x/reserve/types"
+	"github.com/stretchr/testify/require"
 )
 
 func setupMsgServer(t testing.TB) (types.MsgServer, context.Context) {
 	k, ctx := keepertest.ReserveKeeper(t)
 	return keeper.NewMsgServerImpl(*k), sdk.WrapSDKContext(ctx)
+}
+
+func TestMsgServer(t *testing.T) {
+	ms, ctx := setupMsgServer(t)
+	require.NotNil(t, ms)
+	require.NotNil(t, ctx)
 }

@@ -3,13 +3,12 @@ package types_test
 import (
 	"testing"
 
-	"igmf/x/credit/types"
-
+	"core/x/credit/types"
 	"github.com/stretchr/testify/require"
 )
 
 func TestGenesisState_Validate(t *testing.T) {
-	for _, tc := range []struct {
+	tests := []struct {
 		desc     string
 		genState *types.GenesisState
 		valid    bool
@@ -20,64 +19,16 @@ func TestGenesisState_Validate(t *testing.T) {
 			valid:    true,
 		},
 		{
-			desc: "valid genesis state",
+			desc:     "valid genesis state",
 			genState: &types.GenesisState{
 
-				ModuleInfo: types.ModuleInfo{
-					TotalPositions: 3,
-					TotalCredited:  72,
-					CreditFee:      46,
-				},
-				CreditList: []types.Credit{
-					{
-						Index: "0",
-					},
-					{
-						Index: "1",
-					},
-				},
-				PositionsList: []types.Positions{
-					{
-						Address: "0",
-					},
-					{
-						Address: "1",
-					},
-				},
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
 		},
-		{
-			desc: "duplicated credit",
-			genState: &types.GenesisState{
-				CreditList: []types.Credit{
-					{
-						Index: "0",
-					},
-					{
-						Index: "0",
-					},
-				},
-			},
-			valid: false,
-		},
-		{
-			desc: "duplicated positions",
-			genState: &types.GenesisState{
-				PositionsList: []types.Positions{
-					{
-						Address: "0",
-					},
-					{
-						Address: "0",
-					},
-				},
-			},
-			valid: false,
-		},
 		// this line is used by starport scaffolding # types/genesis/testcase
-	} {
+	}
+	for _, tc := range tests {
 		t.Run(tc.desc, func(t *testing.T) {
 			err := tc.genState.Validate()
 			if tc.valid {

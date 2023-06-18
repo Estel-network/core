@@ -3,12 +3,12 @@ package types_test
 import (
 	"testing"
 
+	"core/x/oracle/types"
 	"github.com/stretchr/testify/require"
-	"igmf/x/oracle/types"
 )
 
 func TestGenesisState_Validate(t *testing.T) {
-	for _, tc := range []struct {
+	tests := []struct {
 		desc     string
 		genState *types.GenesisState
 		valid    bool
@@ -27,7 +27,8 @@ func TestGenesisState_Validate(t *testing.T) {
 			valid: true,
 		},
 		// this line is used by starport scaffolding # types/genesis/testcase
-	} {
+	}
+	for _, tc := range tests {
 		t.Run(tc.desc, func(t *testing.T) {
 			err := tc.genState.Validate()
 			if tc.valid {

@@ -3,13 +3,13 @@ package keeper
 import (
 	"fmt"
 
+	"github.com/cometbft/cometbft/libs/log"
 	"github.com/cosmos/cosmos-sdk/codec"
 	storetypes "github.com/cosmos/cosmos-sdk/store/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
-	"github.com/tendermint/tendermint/libs/log"
 
-	"igmf/x/reserve/types"
+	"core/x/reserve/types"
 )
 
 type (
@@ -22,7 +22,6 @@ type (
 		bankKeeper    types.BankKeeper
 		accountKeeper types.AccountKeeper
 		oracleKeeper  types.OracleKeeper
-		creditKeeper  types.CreditKeeper
 	}
 )
 
@@ -35,7 +34,6 @@ func NewKeeper(
 	bankKeeper types.BankKeeper,
 	accountKeeper types.AccountKeeper,
 	oracleKeeper types.OracleKeeper,
-	creditKeeper types.CreditKeeper,
 ) *Keeper {
 	// set KeyTable if it has not already been set
 	if !ps.HasKeyTable() {
@@ -51,7 +49,6 @@ func NewKeeper(
 		bankKeeper:    bankKeeper,
 		accountKeeper: accountKeeper,
 		oracleKeeper:  oracleKeeper,
-		creditKeeper:  creditKeeper,
 	}
 }
 
