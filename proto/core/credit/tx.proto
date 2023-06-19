@@ -1,7 +1,20 @@
 syntax = "proto3";
+
 package core.credit;
 
 option go_package = "core/x/credit/types";
 
 // Msg defines the Msg service.
-service Msg {}
+service Msg {
+  rpc Deposit (MsgDeposit) returns (MsgDepositResponse);
+}
+message MsgDeposit {
+  string creator = 1;
+  string denom   = 2;
+  string amount  = 3;
+}
+
+message MsgDepositResponse {
+  string response = 1;
+}
+

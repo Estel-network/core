@@ -47089,6 +47089,11 @@ definitions:
       liquidationThreshold:
         type: string
         format: uint64
+  core.credit.MsgDepositResponse:
+    type: object
+    properties:
+      response:
+        type: string
   core.credit.Params:
     type: object
     description: Params defines the parameters for the module.
