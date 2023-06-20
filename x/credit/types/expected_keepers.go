@@ -6,7 +6,7 @@ import (
 )
 
 type OracleKeeper interface {
-	// Methods imported from oracle should be defined here
+	GetCoinPrice(coin string) (float64, error)
 }
 
 // AccountKeeper defines the expected account keeper used for simulations (noalias)
