@@ -113,9 +113,6 @@ import (
 	creditmodule "core/x/credit"
 	creditmodulekeeper "core/x/credit/keeper"
 	creditmoduletypes "core/x/credit/types"
-	networkingmodule "core/x/networking"
-	networkingmodulekeeper "core/x/networking/keeper"
-	networkingmoduletypes "core/x/networking/types"
 	oraclemodule "core/x/oracle"
 	oraclemodulekeeper "core/x/oracle/keeper"
 	oraclemoduletypes "core/x/oracle/types"
@@ -187,26 +184,24 @@ var (
 		consensus.AppModuleBasic{},
 		oraclemodule.AppModuleBasic{},
 		otcmodule.AppModuleBasic{},
-		creditmodule.AppModuleBasic{},
 		reservemodule.AppModuleBasic{},
-		networkingmodule.AppModuleBasic{},
+		creditmodule.AppModuleBasic{},
 		// this line is used by starport scaffolding # stargate/app/moduleBasic
 	)
 
 	// module account permissions
 	maccPerms = map[string][]string{
-		authtypes.FeeCollectorName:       nil,
-		distrtypes.ModuleName:            nil,
-		icatypes.ModuleName:              nil,
-		minttypes.ModuleName:             {authtypes.Minter},
-		stakingtypes.BondedPoolName:      {authtypes.Burner, authtypes.Staking},
-		stakingtypes.NotBondedPoolName:   {authtypes.Burner, authtypes.Staking},
-		govtypes.ModuleName:              {authtypes.Burner},
-		ibctransfertypes.ModuleName:      {authtypes.Minter, authtypes.Burner},
-		otcmoduletypes.ModuleName:        {authtypes.Minter, authtypes.Burner, authtypes.Staking},
-		creditmoduletypes.ModuleName:     {authtypes.Minter, authtypes.Burner, authtypes.Staking},
-		reservemoduletypes.ModuleName:    {authtypes.Minter, authtypes.Burner, authtypes.Staking},
-		networkingmoduletypes.ModuleName: {authtypes.Minter, authtypes.Burner, authtypes.Staking},
+		authtypes.FeeCollectorName:     nil,
+		distrtypes.ModuleName:          nil,
+		icatypes.ModuleName:            nil,
+		minttypes.ModuleName:           {authtypes.Minter},
+		stakingtypes.BondedPoolName:    {authtypes.Burner, authtypes.Staking},
+		stakingtypes.NotBondedPoolName: {authtypes.Burner, authtypes.Staking},
+		govtypes.ModuleName:            {authtypes.Burner},
+		ibctransfertypes.ModuleName:    {authtypes.Minter, authtypes.Burner},
+		otcmoduletypes.ModuleName:      {authtypes.Minter, authtypes.Burner, authtypes.Staking},
+		reservemoduletypes.ModuleName:  {authtypes.Minter, authtypes.Burner, authtypes.Staking},
+		creditmoduletypes.ModuleName:   {authtypes.Minter, authtypes.Burner, authtypes.Staking},
 		// this line is used by starport scaffolding # stargate/app/maccPerms
 	}
 )
@@ -274,11 +269,9 @@ type App struct {
 
 	OtcKeeper otcmodulekeeper.Keeper
 
-	CreditKeeper creditmodulekeeper.Keeper
+	ReserveKeeper reservemodulekeeper.Keeper
 
-	ReserveKeeper          reservemodulekeeper.Keeper
-	ScopedNetworkingKeeper capabilitykeeper.ScopedKeeper
-	NetworkingKeeper       networkingmodulekeeper.Keeper
+	CreditKeeper creditmodulekeeper.Keeper
 	// this line is used by starport scaffolding # stargate/app/keeperDeclaration
 
 	// mm is the module manager
@@ -327,9 +320,8 @@ func New(
 		capabilitytypes.StoreKey, group.StoreKey, icacontrollertypes.StoreKey, consensusparamtypes.StoreKey,
 		oraclemoduletypes.StoreKey,
 		otcmoduletypes.StoreKey,
-		creditmoduletypes.StoreKey,
 		reservemoduletypes.StoreKey,
-		networkingmoduletypes.StoreKey,
+		creditmoduletypes.StoreKey,
 		// this line is used by starport scaffolding # stargate/app/storeKey
 	)
 	tkeys := sdk.NewTransientStoreKeys(paramstypes.TStoreKey)
@@ -578,18 +570,6 @@ func New(
 	)
 	otcModule := otcmodule.NewAppModule(appCodec, app.OtcKeeper, app.AccountKeeper, app.BankKeeper)
 
-	app.CreditKeeper = *creditmodulekeeper.NewKeeper(
-		appCodec,
-		keys[creditmoduletypes.StoreKey],
-		keys[creditmoduletypes.MemStoreKey],
-		app.GetSubspace(creditmoduletypes.ModuleName),
-
-		app.BankKeeper,
-		app.AccountKeeper,
-		app.OracleKeeper,
-	)
-	creditModule := creditmodule.NewAppModule(appCodec, app.CreditKeeper, app.AccountKeeper, app.BankKeeper)
-
 	app.ReserveKeeper = *reservemodulekeeper.NewKeeper(
 		appCodec,
 		keys[reservemoduletypes.StoreKey],
@@ -599,30 +579,22 @@ func New(
 		app.BankKeeper,
 		app.AccountKeeper,
 		app.OracleKeeper,
-		app.CreditKeeper,
 	)
 	reserveModule := reservemodule.NewAppModule(appCodec, app.ReserveKeeper, app.AccountKeeper, app.BankKeeper)
 
-	scopedNetworkingKeeper := app.CapabilityKeeper.ScopeToModule(networkingmoduletypes.ModuleName)
-	app.ScopedNetworkingKeeper = scopedNetworkingKeeper
-	app.NetworkingKeeper = *networkingmodulekeeper.NewKeeper(
+	app.CreditKeeper = *creditmodulekeeper.NewKeeper(
 		appCodec,
-		keys[networkingmoduletypes.StoreKey],
-		keys[networkingmoduletypes.MemStoreKey],
-		app.GetSubspace(networkingmoduletypes.ModuleName),
-		app.IBCKeeper.ChannelKeeper,
-		&app.IBCKeeper.PortKeeper,
-		scopedNetworkingKeeper,
+		keys[creditmoduletypes.StoreKey],
+		keys[creditmoduletypes.MemStoreKey],
+		app.GetSubspace(creditmoduletypes.ModuleName),
+
 		app.BankKeeper,
 		app.AccountKeeper,
 		app.OracleKeeper,
-		app.OtcKeeper,
 		app.ReserveKeeper,
-		app.CreditKeeper,
 	)
-	networkingModule := networkingmodule.NewAppModule(appCodec, app.NetworkingKeeper, app.AccountKeeper, app.BankKeeper)
+	creditModule := creditmodule.NewAppModule(appCodec, app.CreditKeeper, app.AccountKeeper, app.BankKeeper)
 
-	networkingIBCModule := networkingmodule.NewIBCModule(app.NetworkingKeeper)
 	// this line is used by starport scaffolding # stargate/app/keeperDefinition
 
 	/**** IBC Routing ****/
@@ -635,7 +607,6 @@ func New(
 	ibcRouter.AddRoute(icahosttypes.SubModuleName, icaHostIBCModule).
 		AddRoute(ibctransfertypes.ModuleName, transferIBCModule)
 	ibcRouter.AddRoute(oraclemoduletypes.ModuleName, oracleIBCModule)
-	ibcRouter.AddRoute(networkingmoduletypes.ModuleName, networkingIBCModule)
 	// this line is used by starport scaffolding # ibc/app/router
 	app.IBCKeeper.SetRouter(ibcRouter)
 
@@ -688,9 +659,8 @@ func New(
 		icaModule,
 		oracleModule,
 		otcModule,
-		creditModule,
 		reserveModule,
-		networkingModule,
+		creditModule,
 		// this line is used by starport scaffolding # stargate/app/appModule
 
 		crisis.NewAppModule(app.CrisisKeeper, skipGenesisInvariants, app.GetSubspace(crisistypes.ModuleName)), // always be last to make sure that it checks for all invariants and not only part of them
@@ -725,9 +695,8 @@ func New(
 		consensusparamtypes.ModuleName,
 		oraclemoduletypes.ModuleName,
 		otcmoduletypes.ModuleName,
-		creditmoduletypes.ModuleName,
 		reservemoduletypes.ModuleName,
-		networkingmoduletypes.ModuleName,
+		creditmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/beginBlockers
 	)
 
@@ -755,9 +724,8 @@ func New(
 		consensusparamtypes.ModuleName,
 		oraclemoduletypes.ModuleName,
 		otcmoduletypes.ModuleName,
-		creditmoduletypes.ModuleName,
 		reservemoduletypes.ModuleName,
-		networkingmoduletypes.ModuleName,
+		creditmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/endBlockers
 	)
 
@@ -790,9 +758,8 @@ func New(
 		consensusparamtypes.ModuleName,
 		oraclemoduletypes.ModuleName,
 		otcmoduletypes.ModuleName,
-		creditmoduletypes.ModuleName,
 		reservemoduletypes.ModuleName,
-		networkingmoduletypes.ModuleName,
+		creditmoduletypes.ModuleName,
 		// this line is used by starport scaffolding # stargate/app/initGenesis
 	}
 	app.mm.SetOrderInitGenesis(genesisModuleOrder...)
@@ -1019,9 +986,8 @@ func initParamsKeeper(appCodec codec.BinaryCodec, legacyAmino *codec.LegacyAmino
 	paramsKeeper.Subspace(icahosttypes.SubModuleName)
 	paramsKeeper.Subspace(oraclemoduletypes.ModuleName)
 	paramsKeeper.Subspace(otcmoduletypes.ModuleName)
-	paramsKeeper.Subspace(creditmoduletypes.ModuleName)
 	paramsKeeper.Subspace(reservemoduletypes.ModuleName)
-	paramsKeeper.Subspace(networkingmoduletypes.ModuleName)
+	paramsKeeper.Subspace(creditmoduletypes.ModuleName)
 	// this line is used by starport scaffolding # stargate/app/paramSubspace
 
 	return paramsKeeper

@@ -457,42 +457,6 @@ paths:
                   additionalProperties: {}
       tags:
         - Query
-  /core/networking/params:
-    get:
-      summary: Parameters queries the parameters of the module.
-      operationId: CoreNetworkingParams
-      responses:
-        '200':
-          description: A successful response.
-          schema:
-            type: object
-            properties:
-              params:
-                description: params holds all the parameters of this module.
-                type: object
-            description: >-
-              QueryParamsResponse is response type for the Query/Params RPC
-              method.
-        default:
-          description: An unexpected error response.
-          schema:
-            type: object
-            properties:
-              code:
-                type: integer
-                format: int32
-              message:
-                type: string
-              details:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    '@type':
-                      type: string
-                  additionalProperties: {}
-      tags:
-        - Query
   /core/oracle/params:
     get:
       summary: Parameters queries the parameters of the module.
@@ -47660,16 +47624,6 @@ definitions:
                   "@type": "type.googleapis.com/google.protobuf.Duration",
                   "value": "1.212s"
                 }
-  core.networking.Params:
-    type: object
-    description: Params defines the parameters for the module.
-  core.networking.QueryParamsResponse:
-    type: object
-    properties:
-      params:
-        description: params holds all the parameters of this module.
-        type: object
-    description: QueryParamsResponse is response type for the Query/Params RPC method.
   core.oracle.Params:
     type: object
     description: Params defines the parameters for the module.

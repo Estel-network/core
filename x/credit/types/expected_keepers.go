@@ -9,6 +9,10 @@ type OracleKeeper interface {
 	GetCoinPrice(coin string) (float64, error)
 }
 
+type ReserveKeeper interface {
+	// Methods imported from reserve should be defined here
+}
+
 // AccountKeeper defines the expected account keeper used for simulations (noalias)
 type AccountKeeper interface {
 	GetAccount(ctx sdk.Context, addr sdk.AccAddress) types.AccountI
