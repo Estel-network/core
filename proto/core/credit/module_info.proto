@@ -5,11 +5,12 @@ option go_package = "core/x/credit/types";
 
 message ModuleInfo {
   bool enabled = 1; 
-  uint64 totalPositions = 2; 
-  uint64 totalCredited = 3; 
-  uint64 creditFee = 4; 
-  uint64 rewardAmount = 5; 
-  uint64 rewardTime = 6; 
-  uint64 liquidationThreshold = 7; 
+  uint64 targetPrice = 2;
+  uint64 totalPositions = 3; 
+  uint64 totalCredited = 4; 
+  uint64 creditFee = 5; 
+  uint64 rewardAmount = 6; 
+  uint64 rewardTime = 7; 
+  uint64 liquidationThreshold = 8; 
   
 }

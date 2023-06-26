@@ -17,6 +17,7 @@ func TestGenesis(t *testing.T) {
 
 		ModuleInfo: types.ModuleInfo{
 			Enabled:              true,
+			TargetPrice:          10000000,
 			TotalPositions:       73,
 			TotalCredited:        75,
 			CreditFee:            80,

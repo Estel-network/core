@@ -383,6 +383,9 @@ paths:
                 properties:
                   enabled:
                     type: boolean
+                  targetPrice:
+                    type: string
+                    format: uint64
                   totalPositions:
                     type: string
                     format: uint64
@@ -47035,6 +47038,9 @@ definitions:
     properties:
       enabled:
         type: boolean
+      targetPrice:
+        type: string
+        format: uint64
       totalPositions:
         type: string
         format: uint64
@@ -47054,6 +47060,11 @@ definitions:
         type: string
         format: uint64
   core.credit.MsgDepositResponse:
+    type: object
+    properties:
+      response:
+        type: string
+  core.credit.MsgMintCreditsResponse:
     type: object
     properties:
       response:
@@ -47199,6 +47210,9 @@ definitions:
         properties:
           enabled:
             type: boolean
+          targetPrice:
+            type: string
+            format: uint64
           totalPositions:
             type: string
             format: uint64

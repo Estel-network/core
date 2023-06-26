@@ -12,12 +12,13 @@ func DefaultGenesis() *GenesisState {
 	return &GenesisState{
 		ModuleInfo: ModuleInfo{
 			Enabled:              false,
+			TargetPrice:          1 * 1000000000,
 			TotalPositions:       0,
 			TotalCredited:        0,
 			CreditFee:            0,
 			RewardAmount:         0,
 			RewardTime:           1400,
-			LiquidationThreshold: 0,
+			LiquidationThreshold: 10,
 		},
 		CreditList:     []Credit{},
 		CollateralList: []Collateral{},

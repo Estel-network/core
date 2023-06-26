@@ -27,6 +27,10 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgDeposit int = 100
 
+	opWeightMsgMintCredits = "op_weight_msg_mint_credits"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgMintCredits int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -66,6 +70,17 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 		creditsimulation.SimulateMsgDeposit(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
+	var weightMsgMintCredits int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgMintCredits, &weightMsgMintCredits, nil,
+		func(_ *rand.Rand) {
+			weightMsgMintCredits = defaultWeightMsgMintCredits
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgMintCredits,
+		creditsimulation.SimulateMsgMintCredits(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
 	// this line is used by starport scaffolding # simapp/module/operation
 
 	return operations
@@ -79,6 +94,14 @@ func (am AppModule) ProposalMsgs(simState module.SimulationState) []simtypes.Wei
 			defaultWeightMsgDeposit,
 			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
 				creditsimulation.SimulateMsgDeposit(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgMintCredits,
+			defaultWeightMsgMintCredits,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				creditsimulation.SimulateMsgMintCredits(am.accountKeeper, am.bankKeeper, am.keeper)
 				return nil
 			},
 		),
