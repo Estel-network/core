@@ -11,6 +11,7 @@ message ModuleInfo {
   uint64 creditFee = 5; 
   uint64 rewardAmount = 6; 
   uint64 rewardTime = 7; 
-  uint64 liquidationThreshold = 8; 
+  uint64 liquidationThreshold = 8;
+  bool liquidable = 9; 
   
 }

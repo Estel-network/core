@@ -6,8 +6,9 @@ option go_package = "core/x/credit/types";
 
 // Msg defines the Msg service.
 service Msg {
-  rpc Deposit     (MsgDeposit    ) returns (MsgDepositResponse    );
-  rpc MintCredits (MsgMintCredits) returns (MsgMintCreditsResponse);
+  rpc Deposit      (MsgDeposit     ) returns (MsgDepositResponse     );
+  rpc MintCredits  (MsgMintCredits ) returns (MsgMintCreditsResponse );
+  rpc RepayCredits (MsgRepayCredits) returns (MsgRepayCreditsResponse);
 }
 message MsgDeposit {
   string creator = 1;
@@ -25,6 +26,15 @@ message MsgMintCredits {
 }
 
 message MsgMintCreditsResponse {
+  string response = 1;
+}
+
+message MsgRepayCredits {
+  string creator = 1;
+  uint64 amount  = 2;
+}
+
+message MsgRepayCreditsResponse {
   string response = 1;
 }
 

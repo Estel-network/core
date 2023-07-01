@@ -18,6 +18,10 @@ func (k msgServer) MintCredits(goCtx context.Context, msg *types.MsgMintCredits)
 		panic("moduleInfo not found")
 	}
 
+	if moduleInfo.Enabled == false {
+		return &types.MsgMintCreditsResponse{Response: "Module is disabled"}, nil
+	}
+
 	creator, err := sdk.AccAddressFromBech32(msg.Creator)
 	if err != nil {
 		return nil, err
@@ -28,7 +32,7 @@ func (k msgServer) MintCredits(goCtx context.Context, msg *types.MsgMintCredits)
 		return &types.MsgMintCreditsResponse{Response: "Inexistent position"}, nil
 	}
 
-	colateralValue := uint64(0)
+	remainingValue := uint64(0)
 
 	for i := 0; i < len(credit.Collateral); i++ {
 		colateral, found := k.Keeper.GetCollateral(ctx, strconv.FormatUint(credit.Collateral[i], 10))
@@ -45,16 +49,16 @@ func (k msgServer) MintCredits(goCtx context.Context, msg *types.MsgMintCredits)
 			return &types.MsgMintCreditsResponse{}, err
 		}
 
-		colateralValue += denomValue * colateral.Amount
+		remainingValue += denomValue * colateral.Amount
 	}
 
-	colateralValue -= credit.Credited * moduleInfo.TargetPrice
+	remainingValue = (remainingValue * moduleInfo.LiquidationThreshold) / 100
 
-	if moduleInfo.LiquidationThreshold != 0 {
-		colateralValue -= colateralValue / moduleInfo.LiquidationThreshold
-	}
+	fee := (msg.Amount * moduleInfo.CreditFee) / 100
 
-	if moduleInfo.TargetPrice*msg.Amount > colateralValue {
+	remainingValue -= credit.Credited * moduleInfo.TargetPrice
+
+	if (moduleInfo.TargetPrice * (msg.Amount + fee)) > remainingValue {
 		return &types.MsgMintCreditsResponse{Response: "Not enought colateral"}, nil
 	}
 
@@ -65,7 +69,7 @@ func (k msgServer) MintCredits(goCtx context.Context, msg *types.MsgMintCredits)
 	k.bankKeeper.SendCoinsFromModuleToAccount(ctx, types.ModuleName, creator, sdk.NewCoins(coins))
 
 	moduleInfo.TotalCredited += msg.Amount
-	credit.Credited += msg.Amount
+	credit.Credited += msg.Amount + fee
 	k.Keeper.SetModuleInfo(ctx, moduleInfo)
 	k.Keeper.SetCredit(ctx, credit)
 

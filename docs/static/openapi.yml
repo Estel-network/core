@@ -404,6 +404,8 @@ paths:
                   liquidationThreshold:
                     type: string
                     format: uint64
+                  liquidable:
+                    type: boolean
         default:
           description: An unexpected error response.
           schema:
@@ -47059,12 +47061,19 @@ definitions:
       liquidationThreshold:
         type: string
         format: uint64
+      liquidable:
+        type: boolean
   core.credit.MsgDepositResponse:
     type: object
     properties:
       response:
         type: string
   core.credit.MsgMintCreditsResponse:
+    type: object
+    properties:
+      response:
+        type: string
+  core.credit.MsgRepayCreditsResponse:
     type: object
     properties:
       response:
@@ -47231,6 +47240,8 @@ definitions:
           liquidationThreshold:
             type: string
             format: uint64
+          liquidable:
+            type: boolean
   core.credit.QueryParamsResponse:
     type: object
     properties:
